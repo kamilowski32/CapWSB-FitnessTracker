@@ -27,13 +27,19 @@ class UserServiceImpl implements UserService, UserProvider {
     }
 
     @Override
-    public Optional<User> getUser(final Long userId) {
-        return userRepository.findById(userId);
-    }
+    public Optional<User> getUser(Long userId) {
+            return userRepository.findById(userId);
+        }
 
     @Override
     public Optional<User> getUserByEmail(final String email) {
         return userRepository.findByEmail(email);
+    }
+
+
+    @Override
+    public List<User> findUsersOlderThan(String Date) {
+        return List.of();
     }
 
     @Override
