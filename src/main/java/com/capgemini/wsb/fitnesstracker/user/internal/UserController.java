@@ -17,7 +17,7 @@ class UserController {
 
     private final UserMapper userMapper;
 
-    @GetMapping
+    @GetMapping("/full")
     public List<UserDto> getAllUsers() {
         return userService.findAllUsers()
                           .stream()
@@ -25,13 +25,28 @@ class UserController {
                           .toList();
     }
 
-    @PostMapping
+    @GetMapping("/simple")
+    public List<BasicUser> getAllBasicUsers() {
+        return userService.findAllUsers()
+                .stream()
+                .map(userMapper::toBasicUser)
+                .toList();
+    }
+
+    @GetMapping("/{id}")
+    public List<User> getUserByID(@PathVariable long id) {
+        return userService.getUser(id)
+                .stream()
+                .toList();
+    }
+
+    @PostMapping("/add")
     public User addUser(@RequestBody UserDto userDto) throws InterruptedException {
 
         // Demonstracja how to use @RequestBody
         System.out.println("User with e-mail: " + userDto.email() + "passed to the request");
 
-        // TODO: saveUser with Service and return User
+
         return null;
     }
 
