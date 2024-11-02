@@ -136,7 +136,6 @@ class UserApiIntegrationTest extends IntegrationTestBase {
         String USER_EMAIL = "mike.scott@domain.com";
 
         String creationRequest = """
-                                                 
                 {
                 "firstName": "%s",
                 "lastName": "%s",
@@ -196,7 +195,7 @@ class UserApiIntegrationTest extends IntegrationTestBase {
 
         List<User> allUsers = getAllUsers();
         User user = allUsers.get(0);
-
+        System.out.println(USER_NAME);
         assertThat(user.getFirstName()).isEqualTo(USER_NAME);
         assertThat(user.getLastName()).isEqualTo(USER_LAST_NAME);
         assertThat(user.getBirthdate()).isEqualTo(LocalDate.parse(USER_BIRTHDATE));

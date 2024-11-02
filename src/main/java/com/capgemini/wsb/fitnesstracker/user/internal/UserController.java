@@ -1,12 +1,15 @@
 package com.capgemini.wsb.fitnesstracker.user.internal;
 
 import com.capgemini.wsb.fitnesstracker.user.api.User;
+import com.capgemini.wsb.fitnesstracker.user.api.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/users")
@@ -34,20 +37,59 @@ class UserController {
     }
 
     @GetMapping("/{id}")
-    public List<User> getUserByID(@PathVariable long id) {
-        return userService.getUser(id)
+    public Optional<User> getUserByID(@PathVariable long id) {
+        return userService.getUser(id);
+    }
+
+    @GetMapping("/email")
+    public List<EmailUser> searchByEmail(@RequestParam String email) {
+        return userService.getUserByEmail(email)
                 .stream()
+                .map(userMapper::toEmailUser)
                 .toList();
     }
 
-    @PostMapping("/add")
-    public User addUser(@RequestBody UserDto userDto) throws InterruptedException {
+    @PostMapping()
+    public ResponseEntity<User> addUser(@RequestBody UserDto userDto) throws InterruptedException {
 
         // Demonstracja how to use @RequestBody
         System.out.println("User with e-mail: " + userDto.email() + "passed to the request");
 
+        User temp = userService.createUser(userMapper.toEntity(userDto));
 
-        return null;
+        return ResponseEntity.status(HttpStatus.CREATED).body(temp);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable long id) {
+        System.out.println("User with e-mail: " + id + "passed to the request");
+        Optional<User> user= userService.getUser(id);
+        if (user.isPresent())
+        {
+            userService.deleteUser(id);
+        }
+        else throw new UserNotFoundException(id);
+    }
+
+    @GetMapping("/older/{time}")
+    public List<User> getOlderThan(@PathVariable LocalDate time) {
+        return userService.findAllUsers()
+                .stream()
+                .filter(user -> user.getBirthdate().isBefore(time))
+                .toList();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable long id, @RequestBody UserDto userDto) {
+        System.out.println("User with e-mail: " + userDto.email() + "passed to the request");
+        Optional<User> user= userService.getUser(id);
+        if (user.isPresent()) {
+            userService.updateUser(id, userMapper.toEntity(userDto));
+        }
+        else throw new UserNotFoundException(id);
+        return ResponseEntity.ok(userMapper.toEntity(userDto));
+    }
+
 
 }

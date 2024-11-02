@@ -30,4 +30,8 @@ class UserMapper {
         );
     }
 
+    EmailUser toEmailUser(User user) {
+        return new EmailUser(user.getId(),
+                user.getEmail());
+    }
 }
