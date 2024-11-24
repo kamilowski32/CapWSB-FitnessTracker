@@ -11,4 +11,15 @@ public interface UserService {
 
     User createUser(User user);
     List<User> findUsersOlderThan(String Date);
+
+    Optional<User> getUserById(Long userId);
+
+    List<User> getAllUsers();
+
+    void deleteUser(Long userId);
+
+    User updateUser(Long id,User updatedUser);
+
+    List<User> searchUsersByEmail(String emailFragment);
+
 }

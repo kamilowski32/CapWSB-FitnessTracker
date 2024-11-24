@@ -81,14 +81,11 @@ class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable long id, @RequestBody UserDto userDto) {
+    public User updateUser(@PathVariable long id, @RequestBody UserDto userDto) {
         System.out.println("User with e-mail: " + userDto.email() + "passed to the request");
-        Optional<User> user= userService.getUser(id);
-        if (user.isPresent()) {
-            userService.updateUser(id, userMapper.toEntity(userDto));
-        }
-        else throw new UserNotFoundException(id);
-        return ResponseEntity.ok(userMapper.toEntity(userDto));
+
+        User user = userMapper.toEntity(userDto);
+        return userService.updateUser(id, user);
     }
 
 
