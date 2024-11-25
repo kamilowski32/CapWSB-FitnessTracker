@@ -63,7 +63,6 @@ class UserController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable long id) {
-        System.out.println("User with e-mail: " + id + "passed to the request");
         Optional<User> user= userService.getUser(id);
         if (user.isPresent())
         {

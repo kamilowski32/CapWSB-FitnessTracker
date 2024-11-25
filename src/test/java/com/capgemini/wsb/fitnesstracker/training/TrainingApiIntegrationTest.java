@@ -75,7 +75,7 @@ class TrainingApiIntegrationTest extends IntegrationTestBase {
                 .andExpect(jsonPath("$[0].distance").value((training1.getDistance())))
                 .andExpect(jsonPath("$[0].averageSpeed").value(training1.getAverageSpeed()))
 
-                .andExpect(jsonPath("$[1]").doesNotExist());;
+                .andExpect(jsonPath("$[1]").doesNotExist());
     }
 
     @Test
@@ -132,7 +132,7 @@ class TrainingApiIntegrationTest extends IntegrationTestBase {
     void shouldPersistTraining_whenCreatingNewTraining() throws Exception {
 
         User user1 = existingUser(generateClient());
-
+        System.out.println(user1.getId());
         String requestBody = """
                 {
                     "userId": "%s",
