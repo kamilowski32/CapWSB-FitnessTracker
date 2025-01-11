@@ -14,43 +14,31 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-class UserServiceImpl implements UserService, UserProvider {
+class UserManagementService implements UserService, UserProvider {
 
     private final UserRepository userRepository;
 
     @Override
-    public User createUser(final User user) {
-        log.info("Creating User {}", user);
-        if (user.getId() != null) {
-            throw new IllegalArgumentException("User has already DB ID, update is not permitted!");
-        }
+    public User addNewUser(final User user) {
+        log.info("Starting user creation for:\n{}", user);
+        validateUserCreation(user);
         return userRepository.save(user);
     }
 
+    private void validateUserCreation(final User user) {
+        if (user.getId() == null) {
+            throw new IllegalArgumentException("New user cannot have an existing database ID.");
+        }
+    }
+
     @Override
-    public Optional<User> getUser(Long userId) {
+    public Optional<User> getUserById(Long userId) {
             return userRepository.findById(userId);
         }
 
     @Override
     public List<User> getUserByEmail(final String email) {
         return userRepository.findByEmail(email);
-    }
-
-
-    @Override
-    public List<User> findUsersOlderThan(String Date) {
-        return List.of();
-    }
-
-    @Override
-    public Optional<User> getUserById(Long userId) {
-        return Optional.empty();
-    }
-
-    @Override
-    public List<User> getAllUsers() {
-        return List.of();
     }
 
     @Override
@@ -73,11 +61,6 @@ class UserServiceImpl implements UserService, UserProvider {
         old.setEmail(user.getEmail());
         old.setBirthdate(user.getBirthdate());
         return userRepository.save(old);
-    }
-
-    @Override
-    public List<User> searchUsersByEmail(String emailFragment) {
-        return List.of();
     }
 
 }

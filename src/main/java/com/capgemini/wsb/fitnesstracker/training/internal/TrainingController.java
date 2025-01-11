@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 class TrainingController {
 
-    private final TrainingServiceImpl trainingService;
+    private final TrainingManagementService trainingService;
     private final TrainingMapper trainingMapper;
 
 
@@ -30,12 +30,12 @@ class TrainingController {
 
     @GetMapping("/activityType")
     public List<Training> getTrainingsByActivityType(@RequestParam ("activityType") ActivityType activityType) {
-        return trainingService.getTrainingsByActivityType(activityType);
+        return trainingService.filterByActivity(activityType);
     }
 
     @GetMapping("/finished/{aftertime}")
     public List<Training> getTrainingsAfter(@PathVariable  @DateTimeFormat(pattern = "yyyy-MM-dd") Date aftertime) {
-        return trainingService.getFinishedTrainings(aftertime);
+        return trainingService.getCompletedTrainingsSince(aftertime);
     }
 
 
@@ -49,7 +49,7 @@ class TrainingController {
     @PutMapping("/{id}")
     public Training updateTraining(@PathVariable Long id, @RequestBody TrainingWithUserId training) {
         Training trainingFullData = trainingMapper.toEntity(training);
-        return trainingService.updateTraining(id, trainingFullData);
+        return trainingService.modifyTraining(id, trainingFullData);
     }
 
 }

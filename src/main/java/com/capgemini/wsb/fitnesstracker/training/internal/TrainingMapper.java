@@ -15,7 +15,7 @@ public class TrainingMapper {
 
     Training toEntity(TrainingWithUserId training) {
         return new Training(
-                userProvider.getUser(training.userId()).orElseThrow(() -> new UserNotFoundException(training.userId())),
+                userProvider.getUserById(training.userId()).orElseThrow(() -> new UserNotFoundException(training.userId())),
                 training.startTime(),
                 training.endTime(),
                 training.activityType(),

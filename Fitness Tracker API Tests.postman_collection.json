@@ -1,0 +1,235 @@
+{
+	"info": {
+		"_postman_id": "9daa912e-0d38-4bf3-bf03-430b27c733cb",
+		"name": "Fitness Tracker API Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39970611"
+	},
+	"item": [
+		{
+			"name": "Get All Trainings",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/v1/trainings",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"trainings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Trainings for Specific User",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/v1/trainings/{{userId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"trainings",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Finished Trainings After Specific Time",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/v1/trainings/finished/{{afterTime}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"trainings",
+						"finished",
+						"{{afterTime}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Trainings by Activity Type",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/v1/trainings/activityType?activityType={{activityType}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"trainings",
+						"activityType"
+					],
+					"query": [
+						{
+							"key": "activityType",
+							"value": "{{activityType}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Training",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": \"{{userId}}\",\n  \"startTime\": \"{{startTime}}\",\n  \"endTime\": \"{{endTime}}\",\n  \"activityType\": \"{{activityType}}\",\n  \"distance\": {{distance}},\n  \"averageSpeed\": {{averageSpeed}}\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/v1/trainings",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"trainings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Training",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": \"{{userId}}\",\n  \"startTime\": \"{{startTime}}\",\n  \"endTime\": \"{{endTime}}\",\n  \"activityType\": \"{{activityType}}\",\n  \"distance\": {{distance}},\n  \"averageSpeed\": {{averageSpeed}}\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/v1/trainings/{{trainingId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"v1",
+						"trainings",
+						"{{trainingId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:9210"
+		},
+		{
+			"key": "activityType",
+			"value": "CYCLING",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "7",
+			"type": "string"
+		},
+		{
+			"key": "trainingId",
+			"value": "4",
+			"type": "string"
+		},
+		{
+			"key": "afterTime",
+			"value": "2024-01-01",
+			"type": "string"
+		},
+		{
+			"key": "startTime",
+			"value": "2022-04-01T07:30:00",
+			"type": "string"
+		},
+		{
+			"key": "endTime",
+			"value": "2022-04-01T10:00:00",
+			"type": "string"
+		},
+		{
+			"key": "distance",
+			"value": "7",
+			"type": "string"
+		},
+		{
+			"key": "averageSpeed",
+			"value": "6",
+			"type": "string"
+		}
+	]
+}

@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 class UserController {
 
-    private final UserServiceImpl userService;
+    private final UserManagementService userService;
 
     private final UserMapper userMapper;
 
@@ -38,7 +38,7 @@ class UserController {
 
     @GetMapping("/{id}")
     public Optional<User> getUserByID(@PathVariable long id) {
-        return userService.getUser(id);
+        return userService.getUserById(id);
     }
 
     @GetMapping("/email")
@@ -55,7 +55,7 @@ class UserController {
         // Demonstracja how to use @RequestBody
         System.out.println("User with e-mail: " + userDto.email() + "passed to the request");
 
-        User temp = userService.createUser(userMapper.toEntity(userDto));
+        User temp = userService.addNewUser(userMapper.toEntity(userDto));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(temp);
     }
@@ -63,7 +63,7 @@ class UserController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable long id) {
-        Optional<User> user= userService.getUser(id);
+        Optional<User> user= userService.getUserById(id);
         if (user.isPresent())
         {
             userService.deleteUser(id);

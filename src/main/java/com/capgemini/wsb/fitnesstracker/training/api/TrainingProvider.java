@@ -9,8 +9,8 @@ public interface TrainingProvider {
 
     List<Training> getAllTrainings();
     List<Training> getTrainingsByUserId(Long userId);
-    List<Training> getFinishedTrainings(Date date);
-    List<Training> getTrainingsByActivityType(ActivityType activityType);
+    List<Training> getCompletedTrainingsSince(Date date);
+    List<Training> filterByActivity(ActivityType activityType);
 
 
 }
